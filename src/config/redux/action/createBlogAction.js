@@ -1,4 +1,4 @@
-import Axios from "axios";
+import {Post, Update} from '../../../api';
 
 export const setForm = (formType, formValue) => {
     return {type: 'SET_FORM_DATA', formType, formValue}
@@ -14,11 +14,7 @@ export const postToAPI = (form) => {
     data.append('body', form.body);
     data.append('image', form.image);
 
-    Axios.post('http://localhost:5000/v1/blog/post', data, {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    })
+    Post(data)
     .then(res => {
       console.log('sukses post: ', res);
     })
@@ -33,11 +29,7 @@ export const updateToAPI = (form, id) => {
     data.append('body', form.body);
     data.append('image', form.image);
 
-    Axios.put(`http://localhost:5000/v1/blog/post/${id}`, data, {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    })
+    Update(id, data)
     .then(res => {
       console.log('sukses update: ', res);
     })

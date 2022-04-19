@@ -20,7 +20,8 @@ const BlogItem = (props) => {
                     <h6 className="card-title">{title}</h6>
                     <small className="card-text">{name} - {date}</small>
                     <p className="card-tex mt-2">{body}</p>
-                    <Button title="Detail" onClick={() => history.push(`/detail-blog/${props._id}`)} className='btn btn-block btn-outline-info' />
+                    <Button children="Detail" type='button' title="Detail" onClick={() => history.push(`/detail-blog/${props._id}`)} 
+                    className="btn btn-outline btn-sm" isWarning ></Button>
                 </div>
             </div>
         </div>

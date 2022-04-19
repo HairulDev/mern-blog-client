@@ -3,7 +3,7 @@ import { Button,  Input, Upload, TextArea } from '../../components';
 import { postToAPI, setForm, setImgPreview, updateToAPI } from '../../config/redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, withRouter } from 'react-router-dom';
-import  Axios  from 'axios';
+import { fetchById, url } from '../../api';
 
 const CreateBlog = (props) => {
   const {form, imgPreview} = useSelector(state => state.createBlogReducer);
@@ -16,12 +16,12 @@ const CreateBlog = (props) => {
     const id = props.match.params.id;
     if(id) {
       setIsUpdate(true);
-      Axios.get(`http://localhost:5000/v1/blog/post/${id}`)
+      fetchById(id)
       .then(res => {
         const data = res.data.data;
         dispatch(setForm('title', data.title));
         dispatch(setForm('body', data.body));
-        dispatch(setImgPreview(`http://localhost:5000/${data.image}`));
+        dispatch(setImgPreview(`${url}/${data.image}`));
       })
       .catch(err => {
         console.log('err: ', err)
@@ -62,10 +62,10 @@ const CreateBlog = (props) => {
                 <TextArea value={body} onChange={(e) => dispatch(setForm('body', e.target.value))} />
                 <div className='row mt-2'>
                   <div className='col-md-6'>
-                  <Button title={isUpdate ? 'Update' : 'Simpan'} onClick={onSubmit} className='btn btn-block btn-primary'/>
+                  <Button children={isUpdate ? 'Update' : 'Simpan'} onClick={onSubmit} className='btn btn-block' isPrimary/>
                   </div>
                   <div className='col-md-6'>
-                  <Button title="Back to Home" className='btn btn-block btn-outline-warning' onClick={() => history.push("/")} />
+                  <Button children="Back to Home" onClick={() => history.push("/")} className='btn btn-block' isWarning/>
                   </div>
                 </div>
             </div>

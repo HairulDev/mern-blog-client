@@ -1,7 +1,7 @@
-import Axios from "axios";
+import { Fetch } from "../../../api";
 
 export const setDataBlog = (page) => (dispatch) => {
-    Axios.get(`http://localhost:5000/v1/blog/posts?page=${page}&perPage=3`)
+    Fetch(page)
     .then(result=> {
       const responseAPI = result.data;
       dispatch({type: 'UPDATE_DATA_BLOG', payload: responseAPI.data});

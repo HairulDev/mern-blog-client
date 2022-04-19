@@ -3,7 +3,7 @@ import { BlogItem, Button } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDataBlog } from '../../config/redux/action';
 import { useHistory } from 'react-router-dom';
-import  Axios  from 'axios';
+import { url, Del } from '../../api';
 
 const Home = () => {
   const [counter, setCounter] = useState(1);
@@ -25,9 +25,8 @@ const Home = () => {
   }
 
   const confirmDelete = (id) => {
-    Axios.delete(`http://localhost:5000/v1/blog/post/${id}`)
+    Del(id)
     .then(res => {
-      console.log('sukses delete: ', res.data);
        dispatch(setDataBlog(counter === 1))
     })
     .catch(err => {
@@ -39,7 +38,7 @@ const Home = () => {
    <div className="card shadow bg-warnings border-white m-4 p-4">
      <div className='row'>
        <div className="col-md-6 text-left">
-         <Button title="+ Create" className='btn btn-sm btn-info' onClick={() => history.push("/create-blog")} />
+         <Button children="+ Create" type="button" className='btn btn-sm ' isInfo onClick={() => history.push("/create-blog")} ></Button>
        </div>
        <div className="col-md-6 text-right">
          <p>Showing page {page.currentPage} / {page.totalPage}</p>
@@ -47,7 +46,7 @@ const Home = () => {
          {dataBlog.map(blog => {
            return <BlogItem
            key={blog._id}
-           image={`http://localhost:5000/${blog.image}`}
+           image={`${url}/${blog.image}`}
            title={blog.title}
            body={blog.body}
            name={blog.author.name}
